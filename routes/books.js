@@ -5,8 +5,14 @@ const Book = require('../models/Book')
 const User = require('../models/User')
 const {bookValidation} = require('../validation');
 
-router.get('/',verify, (req,res) => {
-    res.status(200).json(req.user)
+router.get('/', async (req,res) => {
+    
+    try{
+        const books = await Book.find()
+        res.status(200).json(books)
+    } catch(error) {
+        res.status(401).json({message: error})
+    }
 })
 
 //inserting new Book
